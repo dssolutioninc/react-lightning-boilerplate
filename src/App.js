@@ -3,17 +3,20 @@ import LCC from 'lightning-container';
 
 import './App.css';
 
+// This Line Imports our Component That We Created in our other file.
+import TerminalScreen from './TerminalScreen.js'
+
 class App extends Component {
     
     constructor(props){
         super(props);
         this.state = {
-            exampleMessageValue: "Hello from React!"
+            message: ""
         }
     }
     
     componentDidMount(){
-        LCC.addMessageHandler(this.messageRecievedHandler);
+        LCC.addMessageHandler(this.messageRecievedHandler.bind(this));
     }
     
     messageRecievedHandler(msg){
@@ -25,36 +28,33 @@ class App extends Component {
         
         // Add Any Logic that should be handled here.
         
-        switch (name) {
-            case "example":
-                console.log('Handle Example Messgage')
-                break;
-            default:
-                console.log('Do Nothing');
-        }
+        this.setState({
+            message: value
+        });
     }
     
-    sendMessage(msg){
-        // Message format should be an object like { name: "messageName", value: "message value"}
-        LCC.sendMessage(msg);
-    }
+    // sendMessage(msg){
+    //     // Message format should be an object like { name: "messageName", value: "message value"}
+    //     LCC.sendMessage(msg);
+    // }
     
-    sendMessageExample(){
-        // You can wrap the send message function to easily send specific message types.
+    // sendMessageExample(){
+    //     // You can wrap the send message function to easily send specific message types.
         
-        this.sendMessage(
-            {
-                name: "example",
-                value: this.state.exampleMessageValue
-            }
-        );
-    }
+    //     this.sendMessage(
+    //         {
+    //             name: "example",
+    //             value: this.state.exampleMessageValue
+    //         }
+    //     );
+    // }
+
     
+    // The Render Functiion is what defines the markup of our component.
     render(){
         return (
             <div>
-                <p>A React Component!</p>
-                <button onClick={this.sendMessageExample.bind(this)}>A Button that sends a specific exampleMessage</button>
+                <TerminalScreen text={this.state.message} />
             </div>
         );
     }

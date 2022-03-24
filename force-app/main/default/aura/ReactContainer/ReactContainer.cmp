@@ -1,4 +1,12 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <!-- // Markup: -->
+    <aura:attribute name="score" type="integer" />
+    <input value="{!v.score}" />
+
+    
+
     <aura:attribute name="message" type="string" />
 	
     <lightning:card title="Your React Component">
@@ -8,8 +16,13 @@
             onerror="{!c.handleError}"/>
 
     </lightning:card>
-    <lightning:card title="Message Output">
-        {!v.message}
+
+    <lightning:card title="Your Lightning Component">
+        <p>Send Message to our React Componet</p>
+        <lightning:input name="message" label="Enter your message" value="{!v.message}" />
+        
+        <lightning:button variant="brand" label="Send" title="Send action" onclick="{!c.sendMessage}" />
+        
     </lightning:card>
     
 </aura:component>
